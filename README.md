@@ -10,7 +10,7 @@ Building
 ---
 
 ```bash
-go build -o frontend_linux-amd64 -tags netgo *.go
+go build -o discovery_linux-amd64 -tags netgo *.go
 # Or
 ./script/build
 # My Favorite
@@ -22,8 +22,8 @@ Running
 ---
 
 ```bash
-./frontend_linux-amd64
-docker run --rm -ti pdxjohnny/frontend
+./discovery_linux-amd64
+docker run --rm -ti pdxjohnny/discovery
 ```
 
 Changing The Name

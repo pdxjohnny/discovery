@@ -7,9 +7,9 @@ import (
 )
 
 type BaseService struct {
-	port string
+	port     string
 	interval int
-	conn *net.Conn
+	conn     *net.Conn
 }
 
 func (service *BaseService) Online(addr, port string, message []byte) {

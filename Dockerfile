@@ -1,3 +1,3 @@
 FROM busybox
-ADD ./frontend_linux-amd64 /app
+ADD ./discovery_linux-amd64 /app
 CMD ["/app"]

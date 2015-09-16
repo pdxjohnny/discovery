@@ -47,6 +47,6 @@ func ConfigBindFlags(cmd *cobra.Command) {
 }
 
 func ConfigEnv() {
-	viper.SetEnvPrefix("frontend")
+	viper.SetEnvPrefix("discovery")
 	viper.AutomaticEnv()
 }

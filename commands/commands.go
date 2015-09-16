@@ -3,7 +3,7 @@ package commands
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/pdxjohnny/frontend/discovery"
+	"github.com/pdxjohnny/discovery/discovery"
 )
 
 var Commands = []*cobra.Command{

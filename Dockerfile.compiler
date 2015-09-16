@@ -1,7 +1,7 @@
 FROM pdxjohnny/gox
 
-ENV GOPATH /go/src/github.com/pdxjohnny/frontend/Godeps/_workspace:/go
+ENV GOPATH /go/src/github.com/pdxjohnny/discovery/Godeps/_workspace:/go
 
-WORKDIR /go/src/github.com/pdxjohnny/frontend
+WORKDIR /go/src/github.com/pdxjohnny/discovery
 
-ADD . /go/src/github.com/pdxjohnny/frontend
+ADD . /go/src/github.com/pdxjohnny/discovery

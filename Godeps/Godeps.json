@@ -1,5 +1,5 @@
 {
-	"ImportPath": "github.com/pdxjohnny/frontend",
+	"ImportPath": "github.com/pdxjohnny/discovery",
 	"GoVersion": "go1.5",
 	"Packages": [
 		"./..."
