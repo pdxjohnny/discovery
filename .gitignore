@@ -1,0 +1,8 @@
+Godeps/_workspace
+Godeps/Readme
+build/
+tmp/
+
+bower_components/
+
+frontend_*

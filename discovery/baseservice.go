@@ -12,8 +12,7 @@ type BaseService struct {
 }
 
 func (service *BaseService) Online(addr, port string, message []byte) {
-	valid := true
-	for valid {
+	for {
 		service.Send(addr, port, message)
 		// time.Sleep(1 * time.Second)
 	}
@@ -26,7 +25,7 @@ func (service *BaseService) Send(addr, port string, message []byte) {
 			log.Println("ERROR BaseService.Send while dialing", err)
 			return
 		}
-    service.conn = &conn
+		service.conn = &conn
 	}
 	_, err := (*service.conn).Write(message)
 	if err != nil {
