@@ -45,6 +45,6 @@ func Listen(service Service, addr, port string) {
 		if err != nil {
 			log.Println("ERROR: ", err)
 		}
-		go service.Handle(buf, n, addr)
+		service.Handle(buf, n, addr)
 	}
 }

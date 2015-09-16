@@ -19,7 +19,7 @@ var ConfigOptions = map[string]interface{}{
 			"help":  "A message to send severy interval of time",
 		},
 		"int": map[string]interface{}{
-			"value": "5",
+			"value": 5,
 			"help":  "Interval to send messages and detirmine node timeout",
 		},
 	},

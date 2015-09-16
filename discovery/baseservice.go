@@ -3,18 +3,20 @@ package discovery
 import (
 	"log"
 	"net"
-	// "time"
+	"time"
 )
 
 type BaseService struct {
 	port string
+	interval int
 	conn *net.Conn
 }
 
 func (service *BaseService) Online(addr, port string, message []byte) {
+	interval := time.Duration(service.interval)
 	for {
 		service.Send(addr, port, message)
-		// time.Sleep(1 * time.Second)
+		time.Sleep(interval * time.Second)
 	}
 }
 
