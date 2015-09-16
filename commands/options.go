@@ -32,6 +32,10 @@ var ConfigOptions = map[string]interface{}{
 			"value": "8080",
 			"help":  "Port to bind to",
 		},
+		"url": map[string]interface{}{
+			"value": "http://localhost:25001/",
+			"help":  "Url to reverse proxy to",
+		},
 	},
 	"frontend": map[string]interface{}{
 		"addr": map[string]interface{}{

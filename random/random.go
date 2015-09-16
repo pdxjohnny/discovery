@@ -33,5 +33,8 @@ func String(n int) string {
 }
 
 func Range(min, max int) int {
+	if max <= 0 && min <= 0 {
+		return 0
+	}
 	return random.Intn(max-min) + min
 }
