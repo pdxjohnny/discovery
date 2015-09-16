@@ -14,6 +14,17 @@ func Run() {
 		proxy.Add(viper.GetString("url"))
 	}
 
+	// If we want to accept new frontends
+	if viper.GetBool("discover") {
+		discover := NewProxyDiscoveryService(proxy)
+		go proxy.Discover(
+			discover,
+			viper.GetString("dAddr"),
+			viper.GetString("dPort"),
+		)
+	}
+
+	// Server the reverse proxy server
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", Handler(proxy))
 	err := http.ListenAndServe(":"+viper.GetString("port"), mux)

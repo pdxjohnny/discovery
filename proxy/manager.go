@@ -5,12 +5,14 @@ import (
 	"net/http/httputil"
 	"net/url"
 
+	"github.com/pdxjohnny/discovery/discovery"
 	"github.com/pdxjohnny/discovery/random"
 )
 
 type ProxyManager interface {
 	Add(name string)
 	Random() *httputil.ReverseProxy
+	Discover(service discovery.Service, addr, port string)
 }
 
 type BaseProxyManager struct {
@@ -26,9 +28,9 @@ func NewBaseProxyManager() *BaseProxyManager {
 }
 
 func (proxy *BaseProxyManager) Random() *httputil.ReverseProxy {
-	index := random.Range(0, len(proxy.ProxyList) - 1)
-  indexUrl := proxy.ProxyList[index]
-  return proxy.ProxyMap[indexUrl]
+	index := random.Range(0, len(proxy.ProxyList)-1)
+	indexUrl := proxy.ProxyList[index]
+	return proxy.ProxyMap[indexUrl]
 }
 
 func (proxy *BaseProxyManager) Add(addUrl string) {
@@ -38,4 +40,8 @@ func (proxy *BaseProxyManager) Add(addUrl string) {
 	}
 	proxy.ProxyMap[addUrl] = httputil.NewSingleHostReverseProxy(remote)
 	proxy.ProxyList = append(proxy.ProxyList, addUrl)
+}
+
+func (proxy *BaseProxyManager) Discover(service discovery.Service, addr, port string) {
+	discovery.Listen(service, addr, port)
 }

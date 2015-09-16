@@ -1,5 +1,10 @@
 package commands
 
+const (
+	discovery_port = "43089"
+	frontend_port  = "25001"
+)
+
 var ConfigOptions = map[string]interface{}{
 	"discovery": map[string]interface{}{
 		"addr": map[string]interface{}{
@@ -7,7 +12,7 @@ var ConfigOptions = map[string]interface{}{
 			"help":  "Address to send or bind to",
 		},
 		"port": map[string]interface{}{
-			"value": "43089",
+			"value": discovery_port,
 			"help":  "Port to send or bind to",
 		},
 		"send": map[string]interface{}{
@@ -33,8 +38,20 @@ var ConfigOptions = map[string]interface{}{
 			"help":  "Port to bind to",
 		},
 		"url": map[string]interface{}{
-			"value": "http://localhost:25001/",
+			"value": "",
 			"help":  "Url to reverse proxy to",
+		},
+		"discover": map[string]interface{}{
+			"value": true,
+			"help":  "Listen for frontends to proxy to",
+		},
+		"dAddr": map[string]interface{}{
+			"value": "",
+			"help":  "Discovery address to bind to",
+		},
+		"dPort": map[string]interface{}{
+			"value": discovery_port,
+			"help":  "Discovery port to bind to",
 		},
 	},
 	"frontend": map[string]interface{}{
@@ -43,8 +60,12 @@ var ConfigOptions = map[string]interface{}{
 			"help":  "Address to bind to",
 		},
 		"port": map[string]interface{}{
-			"value": "25001",
+			"value": frontend_port,
 			"help":  "Port to bind to",
+		},
+		"discover": map[string]interface{}{
+			"value": "localhost:" + discovery_port,
+			"help":  "Proxy host to boardcast online to",
 		},
 	},
 }
