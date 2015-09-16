@@ -1,15 +1,12 @@
-package main
+package random
 
 import (
-	"fmt"
-	"log"
 	"math/rand"
-	"net/http"
 	"time"
 )
 
 var src = rand.NewSource(time.Now().UnixNano())
-var uuid = RandStringBytesMaskImprSrc(10)
+var random = rand.New(src)
 
 const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 const (
@@ -18,7 +15,7 @@ const (
 	letterIdxMax  = 63 / letterIdxBits   // # of letter indices fitting in 63 bits
 )
 
-func RandStringBytesMaskImprSrc(n int) string {
+func String(n int) string {
 	b := make([]byte, n)
 	// A src.Int63() generates 63 random bits, enough for letterIdxMax characters!
 	for i, cache, remain := n-1, src.Int63(), letterIdxMax; i >= 0; {
@@ -32,23 +29,9 @@ func RandStringBytesMaskImprSrc(n int) string {
 		cache >>= letterIdxBits
 		remain--
 	}
-
 	return string(b)
 }
 
-func sayhelloName(w http.ResponseWriter, r *http.Request) {
-	r.ParseMultipartForm(2048)
-	r.ParseForm()
-	log.Println(r.Form)
-	log.Println(r.PostForm)
-	log.Println(r.MultipartForm)
-	fmt.Fprintf(w, "Hello from %s\n", uuid)
-}
-
-func main() {
-	http.HandleFunc("/", sayhelloName)
-	err := http.ListenAndServe(":25001", nil)
-	if err != nil {
-		log.Fatal("ListenAndServe: ", err)
-	}
+func Range(min, max int) int {
+	return random.Intn(max-min) + min
 }

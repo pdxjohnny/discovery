@@ -4,6 +4,8 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/pdxjohnny/discovery/discovery"
+	"github.com/pdxjohnny/discovery/frontend"
+	"github.com/pdxjohnny/discovery/proxy"
 )
 
 var Commands = []*cobra.Command{
@@ -13,6 +15,22 @@ var Commands = []*cobra.Command{
 		Run: func(cmd *cobra.Command, args []string) {
 			ConfigBindFlags(cmd)
 			discovery.Run()
+		},
+	},
+	&cobra.Command{
+		Use:   "proxy",
+		Short: "Reverse porxy to frontends",
+		Run: func(cmd *cobra.Command, args []string) {
+			ConfigBindFlags(cmd)
+			proxy.Run()
+		},
+	},
+	&cobra.Command{
+		Use:   "frontend",
+		Short: "Frontend http(s) server to accept files",
+		Run: func(cmd *cobra.Command, args []string) {
+			ConfigBindFlags(cmd)
+			frontend.Run()
 		},
 	},
 }

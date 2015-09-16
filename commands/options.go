@@ -23,4 +23,24 @@ var ConfigOptions = map[string]interface{}{
 			"help":  "Interval to send messages and detirmine node timeout",
 		},
 	},
+	"proxy": map[string]interface{}{
+		"addr": map[string]interface{}{
+			"value": "",
+			"help":  "Address to bind to",
+		},
+		"port": map[string]interface{}{
+			"value": "8080",
+			"help":  "Port to bind to",
+		},
+	},
+	"frontend": map[string]interface{}{
+		"addr": map[string]interface{}{
+			"value": "",
+			"help":  "Address to bind to",
+		},
+		"port": map[string]interface{}{
+			"value": "25001",
+			"help":  "Port to bind to",
+		},
+	},
 }
