@@ -1,3 +1,4 @@
 package key
 
-var noLabel = []byte{0}
+var noLabel = []byte{}
+var password = []byte{}

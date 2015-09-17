@@ -4,7 +4,7 @@ import (
 	"crypto/rand"
 	"crypto/rsa"
 	"crypto/sha256"
-  "log"
+	"log"
 )
 
 func Encrypt(publicKey *rsa.PublicKey, message []byte) ([]byte, error) {

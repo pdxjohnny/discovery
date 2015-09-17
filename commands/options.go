@@ -1,5 +1,9 @@
 package commands
 
+import (
+	key "github.com/pdxjohnny/key/commands"
+)
+
 const (
 	discovery_port = "43089"
 	frontend_port  = "25001"
@@ -68,14 +72,5 @@ var ConfigOptions = map[string]interface{}{
 			"help":  "Proxy host to boardcast online to",
 		},
 	},
-	"key": map[string]interface{}{
-		"key": map[string]interface{}{
-			"value": "keys/id_rsa",
-			"help":  "Key file to output to",
-		},
-		"len": map[string]interface{}{
-			"value": 2048,
-			"help":  "Length of key in bits",
-		},
-	},
+	"key": key.ConfigOptions,
 }

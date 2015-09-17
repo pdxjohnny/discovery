@@ -5,8 +5,8 @@ import (
 
 	"github.com/pdxjohnny/discovery/discovery"
 	"github.com/pdxjohnny/discovery/frontend"
-	"github.com/pdxjohnny/discovery/key"
 	"github.com/pdxjohnny/discovery/proxy"
+	key "github.com/pdxjohnny/key/commands"
 )
 
 var Commands = []*cobra.Command{
@@ -37,13 +37,10 @@ var Commands = []*cobra.Command{
 	&cobra.Command{
 		Use:   "key",
 		Short: "Generate RSA keys",
-		Run: func(cmd *cobra.Command, args []string) {
-			ConfigBindFlags(cmd)
-			key.Run()
-		},
 	},
 }
 
 func init() {
 	ConfigDefaults(Commands...)
+	Commands[3].AddCommand(key.Commands...)
 }
