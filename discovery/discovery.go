@@ -24,33 +24,35 @@ func GetPort(conn *net.UDPConn) string {
 }
 
 func Listen(service Service, addr, port string) {
+	buffSize := service.BuffSize()
+
 	ServerAddr, err := net.ResolveUDPAddr("udp", addr+":"+port)
 	if err != nil {
 		log.Println("ERROR: discovery.Listen ResolveUDPAddr: ", err)
 		return
 	}
 
-	/* Now listen at selected port */
-	ServerConn, err := net.ListenUDP("udp", ServerAddr)
+	ServerConn, err := net.ListenMulticastUDP("udp", nil, ServerAddr)
+	defer ServerConn.Close()
+	ServerConn.SetReadBuffer(buffSize)
 	if err != nil {
 		log.Println("ERROR: discovery.Listen ListenUDP: ", err)
 		return
 	}
 	service.SetPort(GetPort(ServerConn))
-	defer ServerConn.Close()
 
-	buffSize := service.BuffSize()
 	for {
 		buf := make([]byte, buffSize)
 		n, addr, err := ServerConn.ReadFromUDP(buf)
 		if err != nil {
-			log.Println("ERROR: ", err)
+			log.Println("ERROR: discovery.Listen ReadFromUDP: ", err)
+			continue
 		}
 		buf = bytes.Trim(buf, "\x00")
 		buf, err = crypto.Decrypt(service, buf)
 		if err != nil {
-			log.Println("ERROR: discovery.Listen decypting: ", err)
-			return
+			log.Println("ERROR: discovery.Listen Decrypt: ", err)
+			continue
 		}
 		service.Handle(buf, n, addr)
 	}

@@ -5,14 +5,18 @@ import (
 )
 
 const (
+	discovery_addr = "231.213.134.213"
 	discovery_port = "43089"
+	frontend_addr  = ""
 	frontend_port  = "25001"
+	proxy_addr  = ""
+	proxy_port     = "8080"
 )
 
 var ConfigOptions = map[string]interface{}{
 	"discovery": map[string]interface{}{
 		"addr": map[string]interface{}{
-			"value": "",
+			"value": discovery_addr,
 			"help":  "Address to send or bind to",
 		},
 		"port": map[string]interface{}{
@@ -38,11 +42,11 @@ var ConfigOptions = map[string]interface{}{
 	},
 	"proxy": map[string]interface{}{
 		"addr": map[string]interface{}{
-			"value": "",
+			"value": proxy_addr,
 			"help":  "Address to bind to",
 		},
 		"port": map[string]interface{}{
-			"value": "8080",
+			"value": proxy_port,
 			"help":  "Port to bind to",
 		},
 		"url": map[string]interface{}{
@@ -54,7 +58,7 @@ var ConfigOptions = map[string]interface{}{
 			"help":  "Listen for frontends to proxy to",
 		},
 		"dAddr": map[string]interface{}{
-			"value": "",
+			"value": discovery_addr,
 			"help":  "Discovery address to bind to",
 		},
 		"dPort": map[string]interface{}{
@@ -64,16 +68,20 @@ var ConfigOptions = map[string]interface{}{
 	},
 	"frontend": map[string]interface{}{
 		"addr": map[string]interface{}{
-			"value": "",
+			"value": frontend_addr,
 			"help":  "Address to bind to",
 		},
 		"port": map[string]interface{}{
 			"value": frontend_port,
 			"help":  "Port to bind to",
 		},
-		"discover": map[string]interface{}{
-			"value": "localhost:" + discovery_port,
-			"help":  "Proxy host to boardcast online to",
+		"dAddr": map[string]interface{}{
+			"value": discovery_addr,
+			"help":  "Discovery address to send to",
+		},
+		"dPort": map[string]interface{}{
+			"value": discovery_port,
+			"help":  "Discovery port to send to",
 		},
 	},
 	"key": key.ConfigOptions,
