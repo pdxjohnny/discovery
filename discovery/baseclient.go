@@ -5,25 +5,27 @@ import (
 	"log"
 	"net"
 	"time"
-
-	"github.com/pdxjohnny/key/encrypt"
-	"github.com/pdxjohnny/key/load"
 )
 
 type BaseClient struct {
 	interval  int
 	conn      *net.Conn
-	ServerKey *rsa.PublicKey
+	serverKey *rsa.PublicKey
 }
 
-func (client *BaseClient) LoadKey(publicKeyFile string) error {
-	publicKey, err := load.LoadPublic(publicKeyFile)
-	if err != nil {
-		log.Println("ERROR: BaseClient.LoadKey loading public key: ", err)
-		return err
+func NewBaseClient() *BaseClient {
+	return &BaseClient{
+		interval:  5,
+		conn:      nil,
+		serverKey: nil,
 	}
-	client.ServerKey = publicKey
-	return nil
+}
+
+func (client *BaseClient) Key(serverKey interface{}) interface{} {
+	if serverKey != nil {
+		client.serverKey = serverKey.(*rsa.PublicKey)
+	}
+	return client.serverKey
 }
 
 func (client *BaseClient) Dial(addr, port string) error {
@@ -36,31 +38,20 @@ func (client *BaseClient) Dial(addr, port string) error {
 	return nil
 }
 
-func (client *BaseClient) Encrypt(message []byte) ([]byte, error) {
-	message, err := encrypt.Encrypt(
-		client.ServerKey,
-		message,
-	)
-	if err != nil {
-		log.Println("ERROR: BaseClient.Encrypt encrypting: ", err)
-		return nil, err
-	}
-	return message, nil
-}
-
 func (client *BaseClient) Write(p []byte) (int, error) {
 	var message = p
 	if client.conn == nil {
 		return 0, &NotYetDialed{}
 	}
-	if client.ServerKey != nil {
-		p, err := client.Encrypt(p)
+	if client.serverKey != nil {
+		p, err := Encrypt(client, p)
 		if err != nil {
 			log.Println("ERROR: BaseClient.Send while encrypting: ", err)
 			return 0, err
 		}
 		message = p
 	}
+	log.Printf("Sent %d %x\n", len(message), message)
 	_, err := (*client.conn).Write(message)
 	if err != nil {
 		log.Println("ERROR: BaseClient.Send while writing: ", err)

@@ -1,6 +1,7 @@
 package discovery
 
 import (
+	"bytes"
 	"log"
 	"net"
 	"strings"
@@ -42,6 +43,7 @@ func Listen(service Service, addr, port string) {
 		if err != nil {
 			log.Println("ERROR: ", err)
 		}
+		buf = bytes.Trim(buf, "\x00")
 		service.Handle(buf, n, addr)
 	}
 }

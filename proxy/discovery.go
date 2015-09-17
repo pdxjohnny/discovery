@@ -1,6 +1,7 @@
 package proxy
 
 import (
+	"crypto/rsa"
 	"log"
 	"net"
 
@@ -8,17 +9,23 @@ import (
 )
 
 type DiscoveryService struct {
-	*discovery.CryptService
-	proxy    Manager
-	port     string
-	interval int
+	proxy     Manager
+	port      string
+	interval  int
+	serverKey *rsa.PrivateKey
 }
 
 func NewDiscoveryService(proxy Manager) *DiscoveryService {
 	return &DiscoveryService{
-		CryptService: discovery.NewCryptService(),
-		proxy:       proxy,
+		proxy: proxy,
 	}
+}
+
+func (service *DiscoveryService) Key(serverKey interface{}) interface{} {
+	if serverKey != nil {
+		service.serverKey = serverKey.(*rsa.PrivateKey)
+	}
+	return service.serverKey
 }
 
 func (service *DiscoveryService) SetPort(port string) {
@@ -31,5 +38,10 @@ func (service *DiscoveryService) BuffSize() int {
 }
 
 func (service *DiscoveryService) Handle(buf []byte, received int, addr *net.UDPAddr) {
-	log.Println(string(buf), addr)
+	message, err := discovery.Decrypt(service, buf)
+	if err != nil {
+		log.Println("ERROR: DiscoveryService.Handle decypting: ", err)
+		return
+	}
+	log.Println(string(message), addr)
 }

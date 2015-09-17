@@ -31,6 +31,10 @@ var ConfigOptions = map[string]interface{}{
 			"value": 5,
 			"help":  "Interval to send messages and detirmine node timeout",
 		},
+		"key": map[string]interface{}{
+			"value": "keys/id_rsa.pub",
+			"help":  "Key to encrypt with (no .pub if server)",
+		},
 	},
 	"proxy": map[string]interface{}{
 		"addr": map[string]interface{}{
