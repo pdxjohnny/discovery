@@ -10,7 +10,7 @@ import (
 )
 
 func Gen(outFile string, length int) {
-	// generate private key
+	// Generate private key
 	privatekey, err := rsa.GenerateKey(rand.Reader, length)
 	if err != nil {
 		log.Println("ERROR: key.Gen generating private:", err)
