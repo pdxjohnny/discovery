@@ -3,37 +3,10 @@ package discovery
 import (
 	"log"
 	"net"
-	"time"
 )
 
 type BaseService struct {
-	port     string
-	interval int
-	conn     *net.Conn
-}
-
-func (service *BaseService) Online(addr, port string, message []byte) {
-	interval := time.Duration(service.interval)
-	for {
-		service.Send(addr, port, message)
-		time.Sleep(interval * time.Second)
-	}
-}
-
-func (service *BaseService) Send(addr, port string, message []byte) {
-	if service.conn == nil {
-		conn, err := net.Dial("udp", addr+":"+port)
-		if err != nil {
-			log.Println("ERROR BaseService.Send while dialing", err)
-			return
-		}
-		service.conn = &conn
-	}
-	_, err := (*service.conn).Write(message)
-	if err != nil {
-		log.Println("ERROR BaseService.Send while writing", err)
-		return
-	}
+	port string
 }
 
 func (service *BaseService) SetPort(port string) {

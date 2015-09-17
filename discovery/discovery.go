@@ -13,6 +13,9 @@ type Service interface {
 	Handle([]byte, int, *net.UDPAddr)
 }
 
+type Client interface {
+}
+
 /* A Simple function to verify error */
 func CheckError(err error) {
 	if err != nil {
