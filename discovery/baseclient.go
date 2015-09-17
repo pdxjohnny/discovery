@@ -5,6 +5,8 @@ import (
 	"log"
 	"net"
 	"time"
+
+	"github.com/pdxjohnny/key/crypto"
 )
 
 type BaseClient struct {
@@ -44,14 +46,13 @@ func (client *BaseClient) Write(p []byte) (int, error) {
 		return 0, &NotYetDialed{}
 	}
 	if client.serverKey != nil {
-		p, err := Encrypt(client, p)
+		p, err := crypto.Encrypt(client, p)
 		if err != nil {
 			log.Println("ERROR: BaseClient.Send while encrypting: ", err)
 			return 0, err
 		}
 		message = p
 	}
-	log.Printf("Sent %d %x\n", len(message), message)
 	_, err := (*client.conn).Write(message)
 	if err != nil {
 		log.Println("ERROR: BaseClient.Send while writing: ", err)

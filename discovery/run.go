@@ -2,6 +2,7 @@ package discovery
 
 import (
 	"github.com/spf13/viper"
+	"github.com/pdxjohnny/key/crypto"
 )
 
 func Run() {
@@ -12,7 +13,7 @@ func Run() {
 		client := &BaseClient{}
 		client.interval = viper.GetInt("int")
 		if viper.GetString("key") != "" {
-			LoadKey(client, viper.GetString("key"), "public")
+			crypto.LoadKey(client, viper.GetString("key"), "public")
 		}
 		if viper.GetString("send") != "" {
 			client.Send(addr, port, []byte(viper.GetString("send")))
@@ -22,7 +23,7 @@ func Run() {
 	} else {
 		service := &BaseService{}
 		if viper.GetString("key") != "" {
-			LoadKey(service, viper.GetString("key"), "private")
+			crypto.LoadKey(service, viper.GetString("key"), "private")
 		}
 		Listen(service, addr, port)
 	}

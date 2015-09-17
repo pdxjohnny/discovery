@@ -5,9 +5,12 @@ import (
 	"log"
 	"net"
 	"strings"
+
+	"github.com/pdxjohnny/key/crypto"
 )
 
 type Service interface {
+	crypto.Crypto
 	BuffSize() int
 	SetPort(string)
 	Handle([]byte, int, *net.UDPAddr)
@@ -44,6 +47,11 @@ func Listen(service Service, addr, port string) {
 			log.Println("ERROR: ", err)
 		}
 		buf = bytes.Trim(buf, "\x00")
+		buf, err = crypto.Decrypt(service, buf)
+		if err != nil {
+			log.Println("ERROR: discovery.Listen decypting: ", err)
+			return
+		}
 		service.Handle(buf, n, addr)
 	}
 }

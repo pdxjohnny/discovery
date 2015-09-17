@@ -4,8 +4,6 @@ import (
 	"crypto/rsa"
 	"log"
 	"net"
-
-	"github.com/pdxjohnny/discovery/discovery"
 )
 
 type DiscoveryService struct {
@@ -38,10 +36,5 @@ func (service *DiscoveryService) BuffSize() int {
 }
 
 func (service *DiscoveryService) Handle(buf []byte, received int, addr *net.UDPAddr) {
-	message, err := discovery.Decrypt(service, buf)
-	if err != nil {
-		log.Println("ERROR: DiscoveryService.Handle decypting: ", err)
-		return
-	}
-	log.Println(string(message), addr)
+	log.Println(string(buf), addr)
 }

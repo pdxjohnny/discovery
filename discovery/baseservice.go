@@ -35,11 +35,5 @@ func (service *BaseService) BuffSize() int {
 }
 
 func (service *BaseService) Handle(buf []byte, received int, addr *net.UDPAddr) {
-	log.Printf("Recvied %d %x\n", len(buf), buf)
-	message, err := Decrypt(service, buf)
-	if err != nil {
-		log.Println("ERROR: BaseService.Handle decypting: ", err)
-		return
-	}
-	log.Println(string(message), addr)
+	log.Println(string(buf), addr)
 }
