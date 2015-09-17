@@ -5,14 +5,10 @@ import (
 	"github.com/spf13/viper"
 )
 
-var FlagsSet map[string]bool = nil
-
 func ConfigDefaults(cmdList ...*cobra.Command) {
-	FlagsSet = make(map[string]bool)
 	ConfigEnv()
 	ConfigSet()
 	ConfigFlags(cmdList...)
-	FlagsSet = nil
 }
 
 func ConfigSet() {
@@ -48,27 +44,19 @@ func BindFlags(cmd *cobra.Command, name string, flagMap map[string]interface{}) 
 		SetBindFlags(cmd, name, flagMap)
 		return
 	}
-	// Otherwise go deeper
-	for index, item := range flagMap {
-		opt := item.(map[string]interface{})
-		_, ok := opt["help"]
-		if !ok {
-			BindFlags(cmd, index, opt)
-			continue
-		}
-		SetBindFlags(cmd, index, opt)
-	}
+	// // Otherwise go deeper
+	// for index, item := range flagMap {
+	// 	opt := item.(map[string]interface{})
+	// 	_, ok := opt["help"]
+	// 	if !ok {
+	// 		BindFlags(cmd, index, opt)
+	// 		continue
+	// 	}
+	// 	SetBindFlags(cmd, index, opt)
+	// }
 }
 
 func SetBindFlags(cmd *cobra.Command, name string, opt map[string]interface{}) {
-	// Make sure the flag hasnt been set already
-	_, ok := FlagsSet[name]
-	if ok {
-		// Already set
-		return
-	}
-	// Mark as set
-	FlagsSet[name] = true
 	help := opt["help"].(string)
 	switch value := opt["value"].(type) {
 	case int:

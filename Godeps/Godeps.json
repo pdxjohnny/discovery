@@ -39,19 +39,23 @@
 		},
 		{
 			"ImportPath": "github.com/pdxjohnny/key/commands",
-			"Rev": "a2cf4f2b69f02f88a20c9ff4d0c6cb0ed470ab87"
+			"Rev": "2c4bbe3734b5f41ce56c25b72733560564c97c0a"
 		},
 		{
 			"ImportPath": "github.com/pdxjohnny/key/decrypt",
-			"Rev": "a2cf4f2b69f02f88a20c9ff4d0c6cb0ed470ab87"
+			"Rev": "2c4bbe3734b5f41ce56c25b72733560564c97c0a"
 		},
 		{
 			"ImportPath": "github.com/pdxjohnny/key/encrypt",
-			"Rev": "a2cf4f2b69f02f88a20c9ff4d0c6cb0ed470ab87"
+			"Rev": "2c4bbe3734b5f41ce56c25b72733560564c97c0a"
 		},
 		{
 			"ImportPath": "github.com/pdxjohnny/key/gen",
-			"Rev": "a2cf4f2b69f02f88a20c9ff4d0c6cb0ed470ab87"
+			"Rev": "2c4bbe3734b5f41ce56c25b72733560564c97c0a"
+		},
+		{
+			"ImportPath": "github.com/pdxjohnny/key/load",
+			"Rev": "2c4bbe3734b5f41ce56c25b72733560564c97c0a"
 		},
 		{
 			"ImportPath": "github.com/russross/blackfriday",
