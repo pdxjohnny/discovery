@@ -2,6 +2,7 @@ Godeps/_workspace
 Godeps/Readme
 build/
 tmp/
+keys/
 
 bower_components/
 
