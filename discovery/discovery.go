@@ -3,7 +3,6 @@ package discovery
 import (
 	"log"
 	"net"
-	"os"
 	"strings"
 )
 
@@ -11,17 +10,6 @@ type Service interface {
 	BuffSize() int
 	SetPort(string)
 	Handle([]byte, int, *net.UDPAddr)
-}
-
-type Client interface {
-}
-
-/* A Simple function to verify error */
-func CheckError(err error) {
-	if err != nil {
-		log.Println("Error: ", err)
-		os.Exit(1)
-	}
 }
 
 func GetPort(conn *net.UDPConn) string {
@@ -33,11 +21,17 @@ func GetPort(conn *net.UDPConn) string {
 
 func Listen(service Service, addr, port string) {
 	ServerAddr, err := net.ResolveUDPAddr("udp", addr+":"+port)
-	CheckError(err)
+	if err != nil {
+		log.Println("ERROR: discovery.Listen ResolveUDPAddr: ", err)
+		return
+	}
 
 	/* Now listen at selected port */
 	ServerConn, err := net.ListenUDP("udp", ServerAddr)
-	CheckError(err)
+	if err != nil {
+		log.Println("ERROR: discovery.Listen ListenUDP: ", err)
+		return
+	}
 	service.SetPort(GetPort(ServerConn))
 	defer ServerConn.Close()
 

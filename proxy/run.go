@@ -8,7 +8,7 @@ import (
 )
 
 func Run() {
-	proxy := NewBaseProxyManager()
+	proxy := NewBaseManager()
 	// If we only want to proxy to a single url
 	if viper.GetString("url") != "" {
 		proxy.Add(viper.GetString("url"))
@@ -16,7 +16,7 @@ func Run() {
 
 	// If we want to accept new frontends
 	if viper.GetBool("discover") {
-		discover := NewProxyDiscoveryService(proxy)
+		discover := NewDiscoveryService(proxy)
 		go proxy.Discover(
 			discover,
 			viper.GetString("dAddr"),

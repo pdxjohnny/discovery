@@ -3,35 +3,33 @@ package proxy
 import (
 	"log"
 	"net"
+
+	"github.com/pdxjohnny/discovery/discovery"
 )
 
-type ProxyDiscoveryService struct {
-	proxy    ProxyManager
+type DiscoveryService struct {
+	*discovery.CryptService
+	proxy    Manager
 	port     string
 	interval int
 }
 
-func NewProxyDiscoveryService(proxy ProxyManager) *ProxyDiscoveryService {
-	return &ProxyDiscoveryService{
-		proxy: proxy,
+func NewDiscoveryService(proxy Manager) *DiscoveryService {
+	return &DiscoveryService{
+		CryptService: discovery.NewCryptService(),
+		proxy:       proxy,
 	}
 }
 
-func (service *ProxyDiscoveryService) Online(addr, port string, message []byte) {
-}
-
-func (service *ProxyDiscoveryService) Send(addr, port string, message []byte) {
-}
-
-func (service *ProxyDiscoveryService) SetPort(port string) {
+func (service *DiscoveryService) SetPort(port string) {
 	service.port = port
-	log.Println("ProxyDiscoveryService port is now", port)
+	log.Println("LOG: My port is now: ", port)
 }
 
-func (service *ProxyDiscoveryService) BuffSize() int {
+func (service *DiscoveryService) BuffSize() int {
 	return 1024
 }
 
-func (service *ProxyDiscoveryService) Handle(buf []byte, received int, addr *net.UDPAddr) {
+func (service *DiscoveryService) Handle(buf []byte, received int, addr *net.UDPAddr) {
 	log.Println(string(buf), addr)
 }
