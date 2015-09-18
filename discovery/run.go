@@ -1,8 +1,8 @@
 package discovery
 
 import (
-	"github.com/spf13/viper"
 	"github.com/pdxjohnny/key/crypto"
+	"github.com/spf13/viper"
 )
 
 func Run() {

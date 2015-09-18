@@ -16,8 +16,8 @@ type Service interface {
 	Handle([]byte, int, *net.UDPAddr)
 }
 
-func GetPort(conn *net.UDPConn) string {
-	address := conn.LocalAddr().String()
+func Port(addr net.Addr) string {
+	address := addr.String()
 	splitAddress := strings.Split(address, ":")
 	port := splitAddress[len(splitAddress)-1]
 	return port
@@ -39,7 +39,7 @@ func Listen(service Service, addr, port string) {
 		log.Println("ERROR: discovery.Listen ListenUDP: ", err)
 		return
 	}
-	service.SetPort(GetPort(ServerConn))
+	service.SetPort(Port(ServerConn.LocalAddr()))
 
 	for {
 		buf := make([]byte, buffSize)
@@ -56,4 +56,19 @@ func Listen(service Service, addr, port string) {
 		}
 		service.Handle(buf, n, addr)
 	}
+}
+
+func Broadcast(interval int, keyFile, addr, port string, message []byte) {
+	client := NewBaseClient()
+	client.interval = interval
+	crypto.LoadKey(
+		client,
+		keyFile,
+		"public",
+	)
+	client.Online(
+		addr,
+		port,
+		message,
+	)
 }

@@ -5,11 +5,11 @@ import (
 )
 
 const (
-	discovery_addr = "231.213.134.213"
+	discovery_addr = "231.203.134.213"
 	discovery_port = "43089"
 	frontend_addr  = ""
-	frontend_port  = "25001"
-	proxy_addr  = ""
+	frontend_port  = "0"
+	proxy_addr     = ""
 	proxy_port     = "8080"
 )
 
