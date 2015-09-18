@@ -65,6 +65,10 @@ var ConfigOptions = map[string]interface{}{
 			"value": discovery_port,
 			"help":  "Discovery port to bind to",
 		},
+		"dPass": map[string]interface{}{
+			"value": "password",
+			"help":  "Password that webservers wishing to be reverse proxied to need to send",
+		},
 	},
 	"frontend": map[string]interface{}{
 		"addr": map[string]interface{}{
@@ -90,6 +94,10 @@ var ConfigOptions = map[string]interface{}{
 		"dKey": map[string]interface{}{
 			"value": "keys/id_rsa.pub",
 			"help":  "Key to encrypt with for discovery",
+		},
+		"dPass": map[string]interface{}{
+			"value": "password",
+			"help":  "Password to authenticate with reverse proxy server",
 		},
 	},
 	"key": key.ConfigOptions,

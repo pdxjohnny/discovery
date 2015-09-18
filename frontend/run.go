@@ -1,6 +1,8 @@
 package frontend
 
 import (
+	"crypto/sha1"
+	"fmt"
 	"log"
 	"net"
 	"net/http"
@@ -23,7 +25,13 @@ func Run() {
 		return
 	}
 
-	message := []byte(discovery.Port(listner.Addr()))
+	port := discovery.Port(listner.Addr())
+	password := sha1.Sum([]byte(viper.GetString("dPass")))
+	message := []byte(fmt.Sprintf(
+		"%x:%s",
+		password,
+		port,
+	))
 	go discovery.Broadcast(
 		viper.GetInt("int"),
 		viper.GetString("dKey"),

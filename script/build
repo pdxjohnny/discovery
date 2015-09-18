@@ -26,6 +26,9 @@ else
   OS_ARCH_ARG=($2)
 fi
 
+# Run formating
+bash ./script/format
+
 # Build Docker image unless we opt out of it
 if [[ -z "$SKIP_BUILD" ]]; then
   docker build -t "${PRODUCT_NAME}_compiler" -f Dockerfile.compiler .

@@ -20,7 +20,7 @@ var Commands = []*cobra.Command{
 	},
 	&cobra.Command{
 		Use:   "proxy",
-		Short: "Reverse porxy to frontends",
+		Short: "Reverse proxy to frontends",
 		Run: func(cmd *cobra.Command, args []string) {
 			ConfigBindFlags(cmd)
 			proxy.Run()
