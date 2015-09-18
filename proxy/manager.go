@@ -28,7 +28,7 @@ func NewBaseManager() *BaseManager {
 }
 
 func (proxy *BaseManager) Random() *httputil.ReverseProxy {
-	index := random.Range(0, len(proxy.ProxyList)-1)
+	index := random.Range(0, len(proxy.ProxyList))
 	indexUrl := proxy.ProxyList[index]
 	return proxy.ProxyMap[indexUrl]
 }
