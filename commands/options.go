@@ -23,14 +23,6 @@ var ConfigOptions = map[string]interface{}{
 			"value": discovery_port,
 			"help":  "Port to send or bind to",
 		},
-		"send": map[string]interface{}{
-			"value": "",
-			"help":  "A message to send",
-		},
-		"online": map[string]interface{}{
-			"value": "",
-			"help":  "A message to send severy interval of time",
-		},
 		"int": map[string]interface{}{
 			"value": 5,
 			"help":  "Interval to send messages and detirmine node timeout",
@@ -38,6 +30,14 @@ var ConfigOptions = map[string]interface{}{
 		"key": map[string]interface{}{
 			"value": "keys/id_rsa.pub",
 			"help":  "Key to encrypt with (no .pub if server)",
+		},
+		"send": map[string]interface{}{
+			"value": "",
+			"help":  "A message to send",
+		},
+		"online": map[string]interface{}{
+			"value": "",
+			"help":  "A message to send severy interval of time",
 		},
 	},
 	"proxy": map[string]interface{}{
@@ -82,6 +82,14 @@ var ConfigOptions = map[string]interface{}{
 		"dPort": map[string]interface{}{
 			"value": discovery_port,
 			"help":  "Discovery port to send to",
+		},
+		"int": map[string]interface{}{
+			"value": 5,
+			"help":  "Interval to send discovery messages",
+		},
+		"dKey": map[string]interface{}{
+			"value": "keys/id_rsa.pub",
+			"help":  "Key to encrypt with for discovery",
 		},
 	},
 	"key": key.ConfigOptions,

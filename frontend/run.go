@@ -23,16 +23,14 @@ func Run() {
 		return
 	}
 
-	log.Println(listner.Addr().String())
-	log.Println(discovery.Port(listner.Addr()))
-	// message := fmt.Fprintf()
-	// go discovery.Broadcast(
-	// 	viper.GetInt("int"),
-	// 	viper.GetString("dKey"),
-	// 	viper.GetString("dAddr"),
-	// 	viper.GetString("dPort"),
-	// 	message,
-	// )
+	message := []byte(discovery.Port(listner.Addr()))
+	go discovery.Broadcast(
+		viper.GetInt("int"),
+		viper.GetString("dKey"),
+		viper.GetString("dAddr"),
+		viper.GetString("dPort"),
+		message,
+	)
 
 	err = http.Serve(listner, mux)
 	if err != nil {
