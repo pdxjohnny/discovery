@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/pdxjohnny/key/crypto"
 	"github.com/spf13/viper"
 )
 
@@ -17,6 +18,12 @@ func Run() {
 	// If we want to accept new frontends
 	if viper.GetBool("discover") {
 		discover := NewDiscoveryService(proxy)
+		crypto.LoadKey(
+			discover,
+			viper.GetString("dKey"),
+			"private",
+		)
+		discover.password = crypto.Sha(viper.GetString("dPass"), 10)
 		go proxy.Discover(
 			discover,
 			viper.GetString("dAddr"),

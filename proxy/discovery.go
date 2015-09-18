@@ -2,13 +2,18 @@ package proxy
 
 import (
 	"crypto/rsa"
+	"fmt"
 	"log"
 	"net"
+	"strings"
+
+	"github.com/pdxjohnny/discovery/discovery"
 )
 
 type DiscoveryService struct {
 	proxy     Manager
 	port      string
+	password  string
 	interval  int
 	serverKey *rsa.PrivateKey
 }
@@ -36,5 +41,15 @@ func (service *DiscoveryService) BuffSize() int {
 }
 
 func (service *DiscoveryService) Handle(buf []byte, received int, addr *net.UDPAddr) {
-	log.Println(string(buf), addr)
+	pass_and_port := strings.Split(string(buf), ":")
+	password := pass_and_port[0]
+	port := pass_and_port[1]
+	if service.password == password {
+		url := fmt.Sprintf(
+			"http://%s:%s/",
+			discovery.Host(addr),
+			port,
+		)
+		service.proxy.Add(url)
+	}
 }

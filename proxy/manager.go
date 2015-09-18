@@ -38,6 +38,13 @@ func (proxy *BaseManager) Add(addUrl string) {
 	if err != nil {
 		log.Println("ERROR: BaseManager.Add parsing url: ", err)
 	}
+	// Check if url is already in proxy map
+	_, ok := proxy.ProxyMap[addUrl]
+	if ok {
+		return
+	}
+	// If it is not then add it
+	log.Println("LOG: BaseManager.Add: Added web host", addUrl)
 	proxy.ProxyMap[addUrl] = httputil.NewSingleHostReverseProxy(remote)
 	proxy.ProxyList = append(proxy.ProxyList, addUrl)
 }

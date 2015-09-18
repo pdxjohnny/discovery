@@ -65,6 +65,10 @@ var ConfigOptions = map[string]interface{}{
 			"value": discovery_port,
 			"help":  "Discovery port to bind to",
 		},
+		"dKey": map[string]interface{}{
+			"value": "keys/id_rsa",
+			"help":  "Key to decrypt with for discovery",
+		},
 		"dPass": map[string]interface{}{
 			"value": "password",
 			"help":  "Password that webservers wishing to be reverse proxied to need to send",

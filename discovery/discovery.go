@@ -23,6 +23,13 @@ func Port(addr net.Addr) string {
 	return port
 }
 
+func Host(addr net.Addr) string {
+	address := addr.String()
+	splitAddress := strings.Split(address, ":")
+	host := strings.Join(splitAddress[:len(splitAddress)-1], ":")
+	return host
+}
+
 func Listen(service Service, addr, port string) {
 	buffSize := service.BuffSize()
 
